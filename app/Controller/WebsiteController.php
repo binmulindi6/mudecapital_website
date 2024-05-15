@@ -82,7 +82,7 @@ class WebsiteController extends Controller
     }
     public static function admin_post_blog()
     {
-      
+
         if (!Session::check()) {
             return htmlView('admin/login');
         } else {

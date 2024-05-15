@@ -8,16 +8,16 @@ use PDOException;
 
 class Database
 {
-  private $servername = "localhost:8889";
-  private $username = "root";
-  private $password = "root";
-  private $db = "mude_capital_blog";
-  private $conn;
-  // private $servername = "localhost";
-  // private $username = "mudecapi_admin";
-  // private $password = "admin@mudeCapital";
-  // private $db = "mudecapi_blog";
+  // private $servername = "localhost:8889";
+  // private $username = "root";
+  // private $password = "root";
+  // private $db = "mude_capital_blog";
   // private $conn;
+  private $servername = "localhost";
+  private $username = "mudecapi_admin";
+  private $password = "admin@mudeCapital";
+  private $db = "mudecapi_blog";
+  private $conn;
 
   function __construct()
   {
