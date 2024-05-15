@@ -59,7 +59,7 @@
     <script>
     tinymce.init({
         selector: "#blog-body",
-        license_key: "ofzzc0lfzdtbw1o3ymvs0c9dfqf5qpg5gqetr2qc5dgdtmxs",
+        license_key: "gpl",
     });
     </script>
     <script src="/public/assets/js/blog.js" defer></script>

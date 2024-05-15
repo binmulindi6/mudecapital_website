@@ -47,16 +47,22 @@ class BlogController extends Controller
             if ($cover) {
                 $blog = $instance->create(
                     [
-                        'title' => $params['title'],
-                        'description' => $params['description'],
-                        'category' => $params['category'],
-                        'author' => $params['author'],
-                        'body' => $params['body'],
+                        'title' => str_replace("'", "\'", $params['title']),
+                        'description' => str_replace("'", "\'", $params['description']),
+                        'category' => str_replace("'", "\'", $params['category']),
+                        'author' => str_replace("'", "\'", $params['author']),
+                        'body' => str_replace("'", "\'", $params['body']),
                         'cover' => $cover,
                     ]
                 );
-
-                return "success";
+                if ($blog) {
+                    return "success";
+                } else {
+                    unlink(__DIR__ . '/../../public/assets/images/' . $cover);
+                    // return "oklm";
+                    http_response_code(400);
+                    return "please check params ";
+                }
             } else {
                 http_response_code(400);
                 return "Image not uploaded ";
@@ -92,11 +98,11 @@ class BlogController extends Controller
                 if ($cover) {
                     $blog = $blog->create(
                         [
-                            'title' => $params['title'],
-                            'description' => $params['description'],
-                            'category' => $params['category'],
-                            'author' => $params['author'],
-                            'body' => $params['body'],
+                            'title' => str_replace("'", "\'", $params['title']),
+                            'description' => str_replace("'", "\'", $params['description']),
+                            'category' => str_replace("'", "\'", $params['category']),
+                            'author' => str_replace("'", "\'", $params['author']),
+                            'body' => str_replace("'", "\'", $params['body']),
                             'cover' => $cover,
                         ]
                     );
@@ -114,11 +120,11 @@ class BlogController extends Controller
             } else {
                 $blog = $blog->create(
                     [
-                        'title' => $params['title'],
-                        'description' => $params['description'],
-                        'category' => $params['category'],
-                        'author' => $params['author'],
-                        'body' => $params['body'],
+                        'title' => str_replace("'", "\'", $params['title']),
+                        'description' => str_replace("'", "\'", $params['description']),
+                        'category' => str_replace("'", "\'", $params['category']),
+                        'author' => str_replace("'", "\'", $params['author']),
+                        'body' => str_replace("'", "\'", $params['body']),
                     ]
                 );
 
