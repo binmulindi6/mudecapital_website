@@ -1,85 +1,79 @@
 <?php
 
 use App\Controller\Auth\AuthenticationController;
-use App\Controller\UserController;
+use App\Controller\BlogController;
+use App\Controller\MailController;
+use App\Controller\WebsiteController;
 use App\Http\Request;
 use App\Middleware\AbilityMiddleware;
-use App\Middleware\AuthMiddleware;
-
-require_once 'vendor/autoload.php';
-date_default_timezone_set("Africa/Kigali");
-
-$host = ""; #you host url, if the api has not  a dedicated domain name
-
-//AUTH
-if (Request::post($host . '/auth', true)) {
-    (Request::post($host . '/auth/register') && ($data = AuthenticationController::register()))
-        ?: ((Request::post($host . '/auth/authenticate') && ($data = AuthenticationController::login())))
-        ?:  NotFound();
-}
-
-
-//ALL GETS GOES HERE
-if (Request::get($host . '/api', true) && !isset($data)) {
-    //GET EVENTS
-    if (AuthMiddleware::check()) { //AuthMiddleware to check if the your is logged in
-        //GET USERS
-        if (Request::get($host . '/api/users', true)) {
-            (Request::get($host . '/api/users') && AbilityMiddleware::check(['admin']) &&  ($data = UserController::index()))
-                ?: (Request::get($host . '/api/users', false, ['id']) && AbilityMiddleware::check(['admin']) && $data = UserController::show(Request::getParams(['id'])))
-                ?:  NotFound();
-        }
-    } else {
-        http_response_code(403);
-        $data = "Unauthorized";
-    }
-
-    !isset($data) && NotFound();
-}
-
-
-//ALL POSTS GO HERE
-if (Request::post($host . '/api', true)) {
-    //MIDDELEWARE
-    if (AuthMiddleware::check() && !isset($data)) { //AuthMiddleware to check if the your is logged in
-        //Users
-        if (Request::post($host . '/api/user', true)) {
-            (Request::post($host . '/api/users/change_status') && AbilityMiddleware::check(['admin']) && ($data = UserController::changStatus()))
-                ?: (Request::post($host . '/api/users/update') && AbilityMiddleware::check(['admin']) && ($data = UserController::update()))
-                ?: (Request::post($host . '/api/users/make_admin') && AbilityMiddleware::check(['admin']) && ($data = UserController::makeAdmin()))
-                ?:  NotFound();
-        }
-        !isset($data) && NotFound();
-    } else {
-        http_response_code(403);
-        $data = "Unauthorized";
-    }
-}
-
-
 // Allow requests from any origin
 header("Access-Control-Allow-Origin: *");
 
 // Allow specific HTTP methods
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Methods: DELETE,GET, POST, PUT");
 
 // Allow specific headers
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 //views
-if (Request::get() && (!Request::post() || (!Request::get($host . '/api', true) && !Request::get($host  . '/auth', true)))) {
+require_once 'vendor/autoload.php';
+date_default_timezone_set("Africa/Kigali");
+session_start();
 
+$host = ""; #you host url, if the api has not  a dedicated domain name
+//ALL GETS GOES HERE
 
-    Request::get($host . '/') && $data = [
-        "welcome"  => "Php REST API by binmulindi6",
-        "routes" => [
-            "public" => [
-                "/" => 'this welcome page',
-                '/auth/register' => 'Registration',
-                '/auth/authetication' => 'Registration',
-            ]
-        ]
-    ];
+if (Request::get($host . '/api', true) && !isset($data)) {
+    //GET USERS
+    if (Request::get($host . '/api/blogs', true)) {
+        (Request::get($host . '/api/blogs') &&  ($data = BlogController::index()))
+            ?: (Request::get($host . '/api/blogs/latest') &&  ($data = BlogController::latest()))
+            ?: (Request::get($host . '/api/blogs', false, ['id']) && $data = BlogController::show(Request::getParams(['id'])))
+            ?:  NotFound();
+    } else {
+
+        !isset($data) && NotFound();
+    }
 }
+
+
+//ALL POSTS GO HERE
+elseif (Request::post($host . '/api', true)) {
+    // echo 'here';
+
+    if (Request::post($host . '/api/blogs', true)) {
+        (Request::post($host . '/api/blogs/post') && ($data = BlogController::store()))
+            ?: Request::post($host . '/api/blogs/update') && ($data = BlogController::update())
+            ?: Request::post($host . '/api/blogs/delete') && ($data = BlogController::destroy())
+            ?:  NotFound();
+    } elseif (Request::post($host . '/api/send_mail', true)) {
+
+        (Request::post($host . '/api/send_mail') && ($data = MailController::store()))
+            ?:  NotFound();
+    }
+    !isset($data) && NotFound();
+}
+
+
+
+////web controller
+elseif (Request::get() && (!Request::post() || (!Request::get($host . '/api', true) && !Request::get($host  . '/auth', true)))) {
+
+    Request::get($host . '/')  && WebsiteController::home();
+    Request::get($host . '/contact')  && WebsiteController::contact();
+    Request::get($host . '/company')  && WebsiteController::company();
+    Request::get($host . '/policy')  && WebsiteController::policy();
+    Request::get($host . '/help')  && WebsiteController::help();
+    Request::get($host . '/blog')  && WebsiteController::blog();
+    Request::get($host . '/blog-post', true, ['id'])  && WebsiteController::blogs(Request::getParams(['id']));
+    Request::get($host . '/dashboard')  && WebsiteController::dashboard();
+    Request::get($host . '/admin/blog')  && WebsiteController::admin_blog();
+    Request::get($host . '/admin/post-blog')  && WebsiteController::admin_post_blog();
+    Request::get($host . '/admin/edit-post', true, ['id'])  && WebsiteController::edit_blog(Request::getParams(['id']));
+    // // Request::get($host . '/blogs/1')  && WebsiteController::post_blog();
+}
+
+Request::post($host . '/login')  && AuthenticationController::loginWeb();
+Request::post($host . '/logout')  && AuthenticationController::logoutWeb();
 
 if (isset($data)) {
     echo json_encode($data, JSON_PRETTY_PRINT);

@@ -11,13 +11,13 @@ class User extends Model
     public $names;
     public $email;
     public $telephone;
-    public $email_verified_at;
+    protected $email_verified_at;
     public $password;
     public $is_admin;
     public $is_active;
     public $avatar;
-    public $remember_token;
-    public $email_verification_code;
+    protected $remember_token;
+    protected $email_verification_code;
     public $purchases;
     public $sellings;
     public $swaps;
@@ -26,42 +26,10 @@ class User extends Model
     public function getInfo()
     {
         if (!is_null($this)) {
-
-            $this->purchases = $this->purchases();
-            $this->sellings = $this->sellings();
-            $this->swaps = $this->swaps();
             return $this;
         } else {
             return null;
         }
-    }
-
-    ///crypto
-    public function purchases()
-    {
-        $instance = new Purchase();
-        return $instance->getByOptions(['user_id' => $this->id]);
-    }
-    public function sellings()
-    {
-        $instance = new Selling();
-        return $instance->getByOptions(['user_id' => $this->id]);
-    }
-    public function swaps()
-    {
-        $instance = new Swap();
-        return $instance->getByOptions(['user_id' => $this->id]);
-    }
-    public function notifications()
-    {
-        $notificationInstance = new Notificatoin();
-        return $notificationInstance->getByOptions(['user_id' => $this->id]);
-    }
-    public function getLastToken()
-    {
-        $tokenInstance = new PersonalToken();
-        $ability = $this->isAdmin() ? 'admin' : 'simple';
-        return $tokenInstance->getUserLastToken($this->id, $ability);
     }
 
     public function changeStatus()
@@ -93,6 +61,12 @@ class User extends Model
             return true;
         else
             return false;
+    }
+    public function getLastToken()
+    {
+        $tokenInstance = new PersonalToken();
+        $ability = $this->isAdmin() ? 'admin' : 'simple';
+        return $tokenInstance->getUserLastToken($this->id, $ability);
     }
     public function checkUsername($username)
     {

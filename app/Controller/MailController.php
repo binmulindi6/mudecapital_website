@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Config\MailConfig;
 use App\Model\Mail;
 use App\Http\Request;
 
@@ -16,8 +17,7 @@ class MailController extends Controller
         return $mails->find($id);
     }
     public static function getMails()
-    {   
-        // return [];
+    {
         $mails = new Mail();
         return $mails->all();
     }
@@ -27,7 +27,7 @@ class MailController extends Controller
         // var_dump(new Mail());
         if (Request::validate([
             'sender',
-            'recever',
+            // 'recever',
             'subject',
             'message',
             'name',
@@ -39,14 +39,14 @@ class MailController extends Controller
             $created =  $mail->create(
                 [
                     'sender' => $params['sender'],
-                    'recever' => $params['recever'],
+                    'recever' => MailConfig::$contact_email,
                     'subject' => $params['subject'],
                     'message' => $params['message'],
                     'sender_name' => $params['name'],
                     'sender_telephone' => $params['telephone'],
-                    ]
-                );
-                
+                ]
+            );
+
             // return 'success';
             return $created->send();
             // return 'success';

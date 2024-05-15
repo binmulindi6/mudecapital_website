@@ -87,15 +87,24 @@ class Request
         }
         return false;
     }
-    public static function delete($params = null)
+    public static function delete($url = null, $contains = false)
     {
-        if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            if ($params != null) {
-                if (isset($_REQUEST[$params])) {
-                    return true;
-                }
-            } else {
+        $req = $_SERVER['REQUEST_URI'];
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        if ($method == "DELETE") {
+            if ($url === null) {
                 return true;
+            } else {
+                if ($contains) {
+                    if (str_contains($req, $url)) {
+                        return true;
+                    }
+                } else {
+                    if ($url === $req) {
+                        return true;
+                    }
+                }
             }
         }
         return false;

@@ -32,9 +32,9 @@ class Model
   {
     return $this->getDatas("select * from $this->table_name where deleted_at is NULL order by $column $order");
   }
-  public function latest()
+  public function latest($limit = null)
   {
-    return $this->getDatas("select * from $this->table_name where deleted_at is NULL order by created_at desc");
+    return $limit ?  $this->getDatas("select * from $this->table_name where deleted_at is NULL order by created_at desc limit $limit") : $this->getDatas("select * from $this->table_name where deleted_at is NULL order by created_at desc ");
   }
 
   public function  all()
@@ -205,11 +205,11 @@ class Model
     // echo($indexes);
     $i = 1;
     foreach ($options as $index => $value) {
-      $ops .= "$index, ";
-      $values .= $value === null ? "NULL,"  : '"' . $value . '", ';
+      $ops .= "`" . $index . "`, ";
+      $values .= $value === null ? "NULL,"  : "'" . $value . "', ";
     }
     $ops .= "created_at, updated_at ";
-    $values .= '"' . date('Y-m-d H:i') . '", ' . '"' . date('Y-m-d H:i') . '"';
+    $values .= "'" . date('Y-m-d H:i') . "', " . "'" . date('Y-m-d H:i') . "'";
 
 
     //  var_dump("INSERT into $this->table_name ($ops) values ($values)");
@@ -296,7 +296,7 @@ class Model
 
   public function  uploadImage($name, $folder, $file = null)
   {
-    $path = __DIR__ . '/../../public/images/' . $folder;
+    $path = __DIR__ . '/../../public/assets/images/' . $folder;
     // var_dump($_FILES);
     // return false;
     if (isset($_FILES[$name])) {
