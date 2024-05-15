@@ -100,8 +100,13 @@ class BlogController extends Controller
                             'cover' => $cover,
                         ]
                     );
-                    unlink(__DIR__ . '/../../public/assets/images/' . $old);
-                    return "success";
+                    if ($blog) {
+                        unlink(__DIR__ . '/../../public/assets/images/' . $old);
+                        return "success";
+                    } else {
+                        http_response_code(400);
+                        return "Image not uploaded ";
+                    }
                 } else {
                     http_response_code(400);
                     return "Image not uploaded ";
