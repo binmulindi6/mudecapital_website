@@ -83,7 +83,7 @@
       rel="stylesheet"
       type="text/css"
     />
-
+    <script src="/public/assets/js/contact.js" defer></script>
     <script src="https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.9.min.js"></script>
   </head>
 
@@ -555,7 +555,7 @@
             <div class="grid md:grid-cols-5 gap-10">
               <div class="md:col-span-2 col-span-3">
                 <img
-                  src="/public/assets/images/blog/post1.jpg"
+                  src="/public/assets/images/photos/annonce.jpg"
                   class="w-full h-full rounded-md"
                 />
               </div>
@@ -609,19 +609,40 @@
                 Inscrivez-vous pour ne rien manquer sur nos dernières articles.
               </p>
 
-              <div class="flex flex-col md:flex-row lg:flex-col gap-2 mt-7">
+              <form
+                id="frm-news-letter"
+                class="flex flex-col md:flex-row lg:flex-col gap-2 mt-7"
+              >
                 <input
                   type="email"
+                  name="sender"
                   class="w-full md:w-1/2 lg:w-full text-sm border-gray-300 focus:border-gray-200 focus:ring-0 rounded-md bg-white py-3"
                   id="Email"
                   placeholder="Entrer votre Emai"
                 />
                 <button
+                  id="btn-submit"
+                  type="submit"
                   class="w-full md:w-1/2 lg:w-full bg-primary text-white rounded-md text-sm font-semibold flex-none shadow shadow-primary/50 hover:shadow-lg hover:shadow-primary/30 focus:shadow-none focus:outline focus:outline-primary/20 px-8 py-3"
                 >
                   Souscrire
                 </button>
-              </div>
+                <button
+                  style="display: none"
+                  id="loader"
+                  disabled
+                  class="flex mx-auto mb-6"
+                >
+                  <a
+                    href="#"
+                    class="flex items-center justify-center rounded text-xs font-semibold border border-primary text-primary hover:shadow-lg hover:bg-primary hover:text-white hover:shadow-primary/30 focus:shadow-none focus:outline focus:outline-primary/40 px-3 py-2 group"
+                    ><span
+                      class="animate-spin inline-block h-4 w-4 border-2 border-primary border-b-transparent group-hover:border-white group-hover:border-b-transparent rounded-full align-[-.125em] me-2"
+                    ></span>
+                    Posting...</a
+                  >
+                </button>
+              </form>
               <p class="text-sm text-gray-500 mt-2">*Pas des spams.</p>
             </div>
           </div>
@@ -656,7 +677,15 @@
                   .then((blogs) => {
                     let container = ``;
                     blogs.forEach(
-                      ({ id, title, category, description, cover, author }) => {
+                      ({
+                        id,
+                        title,
+                        category,
+                        description,
+                        cover,
+                        author,
+                        created_at,
+                      }) => {
                         container += `
                         <div>
                             <div class="relative" data-aos="fade-up" data-aos-duration="300">
@@ -679,12 +708,14 @@
                                   class="bg-center bg-cover bg-no-repeat rounded-mb mb-5"
                                 ></div>
                             </div>
-                                <p class="text-slate-500 mt-5">May 19 2020 . 5 min read</p>
-                                <h4 class="mt-1 text-lg">
-                                <a href="/blog-post/${id}" class="transition-all hover:text-primary">${title}</a>
-                                <p class="text-sm/relaxed tracking-wider text-gray-500">
-                                    ${description} <a href="/blog-post/${id}" class="text-primary">read more</a>
-                                </p>
+                                            <p class="text-slate-500 mt-5">${new Date(
+                                              created_at
+                                            ).toLocaleDateString()} . par ${author}</p>
+                            <h4 class="mt-1 text-lg">
+                            <a href="/blog-post/${id}" class="transition-all hover:text-primary">${title}</a>
+                            <p class="text-sm/relaxed tracking-wider text-gray-500">
+                                ${description} ... <a href="/blog-post/${id}" class="text-primary">lire la suite.</a>
+                            </p>
                             </h4>
                         </div>
                     `;
@@ -756,7 +787,7 @@
                         <a href="/blog-post/${id}">${title}</a>
                       </h1>
                       <p class="text-sm/relaxed tracking-wider text-gray-500">
-                          ${description} <a href="/blog-post/${id}" class="text-primary">read more</a>
+                          ${description} <a href="/blog-post/${id}" class="text-primary">lire la suite</a>
                       </p>
                     </div>
             `;
@@ -771,7 +802,7 @@
             </script>
           </div>
 
-          <div class="flex justify-center items-center gap-2">
+          <!-- <div class="flex justify-center items-center gap-2">
             <div class="flex items-center">
               <a
                 href="javascript:void(0)"
@@ -787,7 +818,7 @@
                 >Next <i class="fa-solid fa-arrow-right ms-2"></i
               ></a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>

@@ -522,11 +522,11 @@
                 class="relative after:bg-green-200 md:after:h-6 after:h-4 after:w-full after:inset-x-0 after:bottom-0 after:absolute after:-z-10"
                 >rapide</span
               >
-              & securisé pour Acheter, Vendre et Echanger votre
+              & securisé pour Acheter, Vendre et Echanger
               <span
                 class="typewrite text-primary"
                 data-period="5000"
-                data-type='[ "Crypto", "Monnaie"]'
+                data-type='[ "vos Cryptos", " votre Monnaie"]'
               >
                 <span class="wrap"></span>
               </span>
@@ -607,10 +607,10 @@
             </h4>
             <p class="text-slate-400">
               Notre plateforme vous permet de vendre vos actifs numériques en
-              toute simplicité. Avec des
-              <span class="text-primary"> taux compétitifs </span> et une
-              interface conviviale, nous rendons l'achat et la vente de Crypto
-              Monnaies accessibles à tous.
+              toute simplicité. À des
+              <span class="text-primary"> taux compétitifs </span>, avec notre
+              plateforme, nous rendons la vente des Crypto Monnaies accessibles
+              à tous.
             </p>
           </div>
 
@@ -635,9 +635,9 @@
               <span class="text-primary">
                 Bitcoin, Ethereum, USDT ou Binance Coin
               </span>
-              en toute simplicité. Avec des taux compétitifs et une interface
-              conviviale, nous rendons l'achat et la vente de Crypto Monnaies
-              accessibles à tous.
+              en toute simplicité. À des taux compétitifs, avec notre
+              plateforme, nous rendons l'achat des Crypto Monnaies accessibles à
+              tous.
             </p>
           </div>
 
@@ -1020,7 +1020,15 @@
               .then((blogs) => {
                 let container = ``;
                 blogs.forEach(
-                  ({ id, title, category, description, cover, author }) => {
+                  ({
+                    id,
+                    title,
+                    category,
+                    description,
+                    cover,
+                    author,
+                    created_at,
+                  }) => {
                     container += `
                     <div>
                         <div class="relative" data-aos="fade-up" data-aos-duration="300">
@@ -1043,11 +1051,13 @@
                                   class="bg-center bg-cover bg-no-repeat rounded-mb mb-5"
                                 ></div>
                         </div>
-                            <p class="text-slate-500 mt-5">May 19 2020 . 5 min read</p>
+                            <p class="text-slate-500 mt-5">${new Date(
+                              created_at
+                            ).toLocaleDateString()} . par ${author}</p>
                             <h4 class="mt-1 text-lg">
                             <a href="/blog-post/${id}" class="transition-all hover:text-primary">${title}</a>
                             <p class="text-sm/relaxed tracking-wider text-gray-500">
-                                ${description} <a href="/blog-post/${id}" class="text-primary">read more</a>
+                                ${description} ... <a href="/blog-post/${id}" class="text-primary">lire la suite.</a>
                             </p>
                         </h4>
                     </div>

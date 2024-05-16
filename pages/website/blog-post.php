@@ -6,7 +6,7 @@
     <!-- ----- -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Mude Capital : Là où vos finances prennent vie." />
+    <meta name="description" content="Mude Capital | <?= $blog->title ?>" />
     <meta name="keywords" content="MudeCapital, MUDECAPITAL, mudecapital,
     MudeCapital, mude, capital, mude crypto/>
     <meta
@@ -16,12 +16,12 @@
     <meta name="googlebot" content="MudeCapital,Mude Capital,mude capital,mudecapital" />
 
     <!-- facebook -->
-    <meta property="og:title" content="Mude Capital" />
+    <meta property="og:title" content="Mude Capital | <?= $blog->title ?>" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="Mude Capital : Là où vos finances prennent vie." />
+    <meta property="og:description" content="<?= $blog->description ?>" />
     <meta property="og:image" content="/public/assets/images/favicon.png" />
 
-    <title>Mude Capital | Blog</title>
+    <title>Mude Capital | Blog | <?= $blog->title ?></title>
     <link rel="shortcut icon" href="/public/assets/images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/public/assets/css/index.css" />
     <script type="application/ld+json">
@@ -237,7 +237,7 @@
             <div class="flex flex-wrap items-center gap-2 bg-gray-100 py-2 px-3">
                 <a href="#" class="transition-all hover:text-primary">Acceuil</a>
                 / <a href="#" class="transition-all hover:text-primary">Blog</a> /
-                <p class="text-gray-500">Announcing-the-free-upgrade</p>
+                <p class="text-gray-500"><?= $blog->title ?></p>
             </div>
         </div>
         <div id="blog-loader" class="loader"></div>
@@ -259,34 +259,50 @@
 
                             <div>
                                 <h6 class="text-sm transition-all hover:text-primary">
-                                    Admin
+                                    <?= $blog->author ?>
                                 </h6>
-                                <p class="text-sm text-gray-500">11 Mar, 2020 · 3 min read</p>
+                                <p class="text-sm text-gray-500">
+                                    <?= date_format(new DateTime($blog->created_at), 'd/m/Y') ?></p>
                             </div>
                         </div>
 
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 items-center">
                             <p class="text-sm text-gray-500">PARTAGER:</p>
                             <div class="flex gap-3">
-                                <span>
-                                    <a href="#">
-                                        <svg class="w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
-                                            </path>
-                                        </svg>
-                                    </a>
-                                </span>
+                                <span class="cursor-pointer" id="share-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                                        <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
+                                    </svg>
 
-                                <span>
-                                    <a href="#">
-                                        <svg class="w-5 h-5 text-teal-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                                            </path>
-                                        </svg>
-                                    </a>
                                 </span>
+                            </div>
+                            <div class="flex gap-3" id="share-btns">
+                                <!-- <span> -->
+                                <a class="text-green-500" href="whatsapp://send?text=<?= $blog->description . ' https://mudecapital.com/blog-post/' . $blog->id ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
+                                    </svg>
+                                </a>
+                                <!-- </span> -->
+                                <!-- <span> -->
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?= 'https://mudecapital.com/blog-post/' . $blog->id . '&t=' .  $blog->description  ?>" target="_blank">
+                                    <svg class="w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <!-- </span> -->
 
-                                <span>
+                                <!-- <span> -->
+                                <a href="https://twitter.com/share?url=<?= 'https://mudecapital.com/blog-post/' . $blog->id . '&via=mudecapital&text=' .  $blog->description  ?>" target="_blank">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
+                                        <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                                    </svg>
+                                </a>
+                                <!-- </span> -->
+
+                                <!-- <span>
                                     <a href="#">
                                         <svg class="w-5 h-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -294,7 +310,7 @@
                                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                                         </svg>
                                     </a>
-                                </span>
+                                </span> -->
                             </div>
                         </div>
                     </div>
@@ -506,6 +522,32 @@
                 .catch((err) => console.error(err));
         };
         loadBlogData();
+
+
+        console.log(111)
+        if (navigator.share) {
+            console.log(112)
+            // Enable the Web Share API button
+            const shareButton = document.getElementById('share-btn');
+            const shareButtons = document.getElementById('share-btns');
+            shareButtons.classList.add('hidden');
+            shareButton.addEventListener('click', () => {
+                navigator.share({
+                        title: `<?= $blog->title ?>`,
+                        text: `<?= $blog->description ?>`,
+                        url: `https://mudecapital.com/blog-post/<?= $blog->id ?>`,
+                    })
+                    .then(() => console.log('Shared successfully'))
+                    .catch((error) => console.error('Sharing failed:', error));
+            });
+        } else {
+            console.log(113)
+            // If Web Share API is not supported, hide the button
+            const shareButton = document.getElementById('share-btn');
+            const shareButtons = document.getElementById('share-btns');
+            shareButton.classList.add('hidden');
+            // shareButtons.classList.remove('hidden');
+        }
     </script>
 
     <section class="py-20">

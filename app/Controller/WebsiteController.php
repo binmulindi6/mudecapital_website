@@ -21,8 +21,8 @@ class WebsiteController extends Controller
         $instance = new Blog();
         // var_dump($blog_id['id']);
         if (isset($blog_id['id']) and $instance->find($blog_id['id'])) {
-            $id = $blog_id['id'];
-            return view('website/blog-post', ['id' => $id]);
+            $blog = $instance->find($blog_id['id']);
+            return view('website/blog-post', ['id' => $blog->id, 'blog' => $blog]);
         } else {
             NotFound();
         }

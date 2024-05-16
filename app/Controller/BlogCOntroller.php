@@ -96,7 +96,7 @@ class BlogController extends Controller
                 $cover =  $instance->uploadImage('cover', 'blog/');
                 $old = $blog->cover;
                 if ($cover) {
-                    $blog = $blog->create(
+                    $blog = $blog->save(
                         [
                             'title' => str_replace("'", "\'", $params['title']),
                             'description' => str_replace("'", "\'", $params['description']),
@@ -118,7 +118,7 @@ class BlogController extends Controller
                     return "Image not uploaded ";
                 }
             } else {
-                $blog = $blog->create(
+                $blog = $blog->save(
                     [
                         'title' => str_replace("'", "\'", $params['title']),
                         'description' => str_replace("'", "\'", $params['description']),

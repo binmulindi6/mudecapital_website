@@ -48,6 +48,7 @@ elseif (Request::post($host . '/api', true)) {
     } elseif (Request::post($host . '/api/send_mail', true)) {
 
         (Request::post($host . '/api/send_mail') && ($data = MailController::store()))
+            ?: (Request::post($host . '/api/send_mail/news_letter') && ($data = MailController::register()))
             ?:  NotFound();
     }
     !isset($data) && NotFound();
