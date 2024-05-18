@@ -8,9 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Mude Capital | <?= $blog->title ?>" />
     <meta name="keywords" content="MudeCapital, MUDECAPITAL, mudecapital,
-    MudeCapital, mude, capital, mude crypto/>
-    <meta
-      name=" google-site-verification" content="kshYECkpi8M8ueo-W8qZZQrAvxwzgXdYHajloTGYxCo" />
+    MudeCapital, mude, capital, mude crypto" />
+    <meta name="google-site-verification" content="rVyZRnJ61pYXind2d-8ziS8KYTnysqu6BztRbulXS3s" />
     <link rel="canonical" href="https://mudecapital.com" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="MudeCapital,Mude Capital,mude capital,mudecapital" />

@@ -66,6 +66,8 @@ elseif (Request::get() && (!Request::post() || (!Request::get($host . '/api', tr
     Request::get($host . '/help')  && WebsiteController::help();
     Request::get($host . '/blog')  && WebsiteController::blog();
     Request::get($host . '/blog-post', true, ['id'])  && WebsiteController::blogs(Request::getParams(['id']));
+
+    
     Request::get($host . '/dashboard')  && WebsiteController::dashboard();
     Request::get($host . '/admin/blog')  && WebsiteController::admin_blog();
     Request::get($host . '/admin/post-blog')  && WebsiteController::admin_post_blog();
